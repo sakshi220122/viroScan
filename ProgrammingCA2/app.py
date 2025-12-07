@@ -443,5 +443,25 @@ def rescan(scan_id):
 def login():
     return render_template('login.html')
 
+
+@app.route('/login', methods=['POST'])
+def login_post():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    
+    if email == "admin@example.com" and password == "password":  
+        flash("Login successful!", "success")
+        return redirect(url_for('index'))
+    else:
+        flash("Invalid email or password", "error")
+        return redirect(url_for('login'))
+
+@app.route('/forgot-password')
+def forgot_password():
+    return "Forgot password page coming soon!"
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
