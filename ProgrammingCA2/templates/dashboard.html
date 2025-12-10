@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>User Dashboard - ViroScan</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    
+    .dashboard-container {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 179, 255, 0.2);
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+      padding: 25px;
+    }
+
+    .dashboard-header {
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(0, 179, 255, 0.2);
+      color: var(--primary);
+    }
+
+    .stat-card {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 179, 255, 0.2);
+      border-radius: 5px;
+      padding: 20px;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+  </style>
+
+</head>
+
+<body class="cyber-theme">
+
+  
+  <header class="header_section">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand" href="/">
+          <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" class="logo" />
+            <div class="logo-glow"></div>
+          </div>
+          <span class="cyber-text">Viro<span class="text-accent">Scan</span></span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="container mt-5 animate__animated animate__fadeIn">
+    <div class="dashboard-container">
+
+      <div class="dashboard-header">
+        <h3>Welcome, {{ current_user.name }}</h3>
+      </div>
+
+      
+      <div class="row">
+        <div class="col-md-4">
+          <div class="stat-card">
+            <h4>Total Scans</h4>
+            <p>15</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="stat-card">
+            <h4>Clean Files</h4>
+            <p>13</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="stat-card">
+            <h4>Threats Found</h4>
+            <p>2</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+</body>
+</html>
