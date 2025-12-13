@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ViroScan — Secure Access</title>
+
+ 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg:#06080a;
+      --panel:#071018;
+      --neon:#00b3ff;
+      --accent:#1effa5;
+      --muted:rgba(255,255,255,0.6);
+      --glass: rgba(255,255,255,0.03);
+    }
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial;}
+    body{
+      background: radial-gradient(ellipse at 20% 10%, rgba(0,179,255,0.03), transparent 10%),
+                  radial-gradient(ellipse at 80% 90%, rgba(0,255,157,0.02), transparent 10%),
+                  var(--bg);
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+    }
+
+    
+    .binary-bg{
+      position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.06;
+      background-image:
+        linear-gradient(transparent 0 96%, rgba(0,0,0,0.6) 96%),
+        repeating-linear-gradient(90deg, rgba(0,179,255,0.02) 0 1px, transparent 1px 30px);
+      mix-blend-mode:overlay;
+    }
+
+    .wrap{
+      z-index:5;
+      width:100%;
+      max-width:920px;
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:40px;
+      align-items:center;
+    }
+
+    
+    .hero{
+      padding:20px 30px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;margin-bottom:30px;
+    }
+    .logo{
+      width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#002a4d,#003a6b);
+      display:flex;align-items:center;justify-content:center;color:var(--neon);font-weight:800;
+      box-shadow:0 0 18px rgba(0,179,255,0.06), inset 0 -6px 20px rgba(0,0,0,0.5);
+    }
+    h1{color:#fff;margin:0 0 8px;font-size:32px;letter-spacing:1px;}
+    .lead{color:var(--muted);margin:0 0 18px}
+    .features{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+    .feature{display:flex;align-items:center;gap:10px;color:var(--muted)}
+    .chip{background:var(--glass);padding:8px 12px;border-radius:8px;color:var(--neon);font-weight:600;display:inline-block}
+
+    
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(0,179,255,0.08);
+      padding:22px;
+      border-radius:10px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.6);
+      position:relative; overflow:hidden;
+    }
+
+    .tabs{display:flex;gap:12px;margin-bottom:12px}
+    .tab{
+      flex:1;padding:12px 14px;border-radius:8px;text-align:center;cursor:pointer;color:var(--muted);
+      border-bottom:2px solid transparent; user-select:none;
+    }
+    .tab.active{color:var(--neon); font-weight:700; border-bottom-color:var(--neon); box-shadow:0 6px 30px rgba(0,179,255,0.03) inset;}
+
+    form{margin-top:6px}
+    label{display:block;font-size:0.85rem;color:var(--neon);margin-bottom:6px;font-weight:600}
+    .input{width:100%;padding:10px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;box-sizing:border-box}
+    .input::placeholder{color:rgba(255,255,255,0.3)}
+    .input-wrap{position:relative}
+    .toggle-eye{position:absolute;right:8px;top:8px;background:transparent;border:none;color:var(--muted);cursor:pointer;padding:6px;border-radius:6px}
+
+    .small{font-size:0.85rem;color:var(--muted);margin-top:8px}
+    .btn{
+      background:linear-gradient(90deg,var(--neon),#00ffd1);
+      color:#00121a;padding:12px;border:none;border-radius:8px;font-weight:700;width:100%;cursor:pointer;margin-top:12px;
+      box-shadow:0 6px 30px rgba(0,179,255,0.12);
+    }
+
+    .socials{display:flex;justify-content:center;gap:12px;margin-top:14px}
+    .social{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);cursor:pointer}
+    .social:hover{transform:translateY(-4px);color:var(--neon)}
+
+    .footer-small{text-align:center;margin-top:12px;color:var(--muted);font-size:0.85rem}
+
+    .flash{background:rgba(255,50,50,0.08);border-left:4px solid rgba(255,50,50,0.6);padding:10px;color:#ffb4b4;border-radius:6px;margin-bottom:12px}
+
+    
+    .strength {height:6px;background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;overflow:hidden}
+    .strength > i{display:block;height:100%;width:0;transition:width .25s linear;background:linear-gradient(90deg,#ff4d4d,#ffaa00,#00ff9d)}
+
+    @media (max-width:880px){
+      .wrap{grid-template-columns:1fr;padding:18px}
+      .hero{order:2}
+    }
+  </style>
+</head>
+<body>
+  <div class="binary-bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    
+    <div class="hero">
+      <div class="brand">
+        <div class="logo">V</div>
+        <div>
+          <div style="font-size:14px;color:var(--neon);font-weight:700">VIROSCAN</div>
+          <div style="font-size:12px;color:var(--muted)">Threat analysis & file/url scanning</div>
+        </div>
+      </div>
+
+      <h1>SECURE <span style="color:var(--accent)">ACCESS</span></h1>
+      <p class="lead">Login or create an account to access advanced security features and scan files or URLs with VirusTotal integration.</p>
+
+      <div class="features">
+        <div class="feature"><span class="chip">Realtime</span> <span style="margin-left:10px">Fast scanning & reporting</span></div>
+        <div class="feature"><span class="chip">Secure</span> <span style="margin-left:10px">Hashed passwords & session auth</span></div>
+        <div class="feature"><span class="chip">Integrated</span> <span style="margin-left:10px">VirusTotal API</span></div>
+      </div>
+    </div>
+
+    
+    <div class="panel">
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="tabs" role="tablist">
+        <div class="tab active" data-tab="login"> <i class="fas fa-sign-in-alt"></i> Login</div>
+        <div class="tab" data-tab="signup"> <i class="fas fa-user-plus"></i> Sign Up</div>
+      </div>
+
+      
+      <form id="login-form" class="form-panel active" action="{{ url_for('login_post') }}" method="POST" novalidate>
+        <label for="login-email">Email Address</label>
+        <div class="input-wrap">
+          <input id="login-email" name="email" type="email" class="input" placeholder="Enter your email" required>
+        </div>
+
+        <label for="login-password" style="margin-top:10px">Password</label>
+        <div class="input-wrap">
+          <input id="login-password" name="password" type="password" class="input" placeholder="Enter your password" required>
+          <button type="button" class="toggle-eye" data-target="login-password" aria-label="toggle password">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <label style="font-size:0.9rem;color:var(--muted)"><input type="checkbox" name="remember" style="margin-right:8px">Remember me</label>
+          <a href="{{ url_for('forgot_password') }}" style="color:var(--neon);font-size:0.9rem;text-decoration:none">Forgot?</a>
+        </div>
+
+        <button class="btn" type="submit"><i class="fas fa-lock"></i> &nbsp; SECURE LOGIN</button>
+
+        <div class="footer-small">or continue with</div>
+        <div class="socials" aria-hidden="true">
+          <button class="social" title="Google"><i class="fab fa-google"></i></button>
+          <button class="social" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+          <button class="social" title="Twitter"><i class="fab fa-twitter"></i></button>
+        </div>
+      </form>
+
+      
+      <form id="signup-form" class="form-panel" action="{{ url_for('signup_post') }}" method="POST" novalidate style="display:none;margin-top:10px">
+        <label for="signup-name">Full Name</label>
+        <input id="signup-name" name="name" type="text" class="input" placeholder="Your full name" required>
+
+        <label for="signup-email" style="margin-top:10px">Email Address</label>
+        <input id="signup-email" name="email" type="email" class="input" placeholder="Your email" required>
+
+        <label for="signup-password" style="margin-top:10px">Password</label>
+        <div class="input-wrap">
+          <input id="signup-password" name="password" type="password" class="input" placeholder="Create a strong password" required>
+          <button type="button" class="toggle-eye" data-target="signup-password" aria-label="toggle password"><i class="fas fa-eye"></i></button>
+        </div>
+
+        
+        <div class="small">Password strength</div>
+        <div class="strength" aria-hidden="true"><i id="strength-bar"></i></div>
+        <div class="small" id="strength-text" style="margin-bottom:8px;color:var(--muted)">Minimum 8 characters</div>
+
+        <button class="btn" type="submit"><i class="fas fa-user-shield"></i> &nbsp; CREATE SECURE ACCOUNT</button>
+
+        <div class="footer-small" style="margin-top:8px">Already have an account? <a href="#" id="quick-login" style="color:var(--neon);text-decoration:none">Login</a></div>
+      </form>
+    </div>
+  </div>
+
+  
+  <script>
+    
+    const tabs = document.querySelectorAll('.tab');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    tabs.forEach(t=>{
+      t.addEventListener('click', () => {
+        tabs.forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        if (t.dataset.tab === 'login') {
+          signupForm.style.display = 'none';
+          loginForm.style.display = 'block';
+        } else {
+          signupForm.style.display = 'block';
+          loginForm.style.display = 'none';
+        }
+      });
+    });
+    
+    document.getElementById('quick-login').addEventListener('click', (e)=>{
+      e.preventDefault();
+      document.querySelector('.tab[data-tab="login"]').click();
+    });
+
+   
+    document.querySelectorAll('.toggle-eye').forEach(btn=>{
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.target);
+        if (!target) return;
+        if (target.type === 'password') {
+          target.type = 'text';
+          btn.querySelector('i').classList.remove('fa-eye');
+          btn.querySelector('i').classList.add('fa-eye-slash');
+        } else {
+          target.type = 'password';
+          btn.querySelector('i').classList.add('fa-eye');
+          btn.querySelector('i').classList.remove('fa-eye-slash');
+        }
+      });
+    });
+
+
+    const signupPassword = document.getElementById('signup-password');
+    const strengthBar = document.getElementById('strength-bar');
+    const strengthText = document.getElementById('strength-text');
+
+    signupPassword && signupPassword.addEventListener('input', function(){
+      const v = this.value;
+      let score = 0;
+      if (v.length >= 8) score++;
+      if (/[A-Z]/.test(v)) score++;
+      if (/[0-9]/.test(v)) score++;
+      if (/[^A-Za-z0-9]/.test(v)) score++;
+
+      const pct = (score/4) * 100;
+      strengthBar.style.width = pct + '%';
+
+      if (score <= 1) {
+        strengthBar.style.background = 'linear-gradient(90deg,#ff4d4d,#ff7b7b)';
+        strengthText.textContent = 'Weak password';
+      } else if (score == 2) {
+        strengthBar.style.background = 'linear-gradient(90deg,#ffaa00,#ffd27a)';
+        strengthText.textContent = 'Medium strength';
+      } else if (score == 3) {
+        strengthBar.style.background = 'linear-gradient(90deg,#2ecc71,#76e6a6)';
+        strengthText.textContent = 'Good password';
+      } else {
+        strengthBar.style.background = 'linear-gradient(90deg,#00ff9d,#00ffd8)';
+        strengthText.textContent = 'Strong & secure';
+      }
+    });
+
+   
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('action') === 'signup') {
+        document.querySelector('.tab[data-tab="signup"]').click();
+      }
+    })();
+  </script>
+</body>
+</html>
